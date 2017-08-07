@@ -11,7 +11,7 @@ func main() {
     c := config.LoadConfig("./bot_config.json")
     //fmt.Println(c.ToString())
     //fmt.Println(c.Nick)
-    cfg := irc.Client(createIrcConfiguration(c))
+    cfg := irc.Client(createIRCConfiguration(c))
 
     quit := make(chan bool)
     cfg.HandleFunc(irc.DISCONNECTED,
@@ -23,7 +23,7 @@ func main() {
     <-quit
 }
 
-func createIrcConfiguration(c config.BotConfig) *irc.Config {
+func createIRCConfiguration(c config.BotConfig) *irc.Config {
     cfg := irc.NewConfig(c.Nick)
     cfg.SSL = false
     cfg.Server = c.Server
