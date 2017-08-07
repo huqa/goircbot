@@ -7,12 +7,14 @@ import (
     "os"
 )
 
+// TODO add support for SSL
 type BotConfig struct {
     Nick string `json:"nick"`
     Ident string `json:"ident"`
     Realname string `json:"realname"`
     Version string `json:"version"`
     QuitMessage string `json:"quitMessage"`
+    Server string `json:"server"`
 }
 
 func (c BotConfig) ToString() string {
