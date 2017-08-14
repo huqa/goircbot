@@ -15,6 +15,7 @@ type BotConfig struct {
     Version string `json:"version"`
     QuitMessage string `json:"quitMessage"`
     Server string `json:"server"`
+    Channels []string `json:"channels"`
 }
 
 func (c BotConfig) ToString() string {

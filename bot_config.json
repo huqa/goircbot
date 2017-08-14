@@ -4,5 +4,8 @@
     "realname":"Go Irc bot You know",
     "version":"huqas Golang ircbot v0.01",
     "quitMessage":"Moromoro",
-    "server": "irc.atw-inter.net"
+    "server": "irc.atw-inter.net",
+    "channels": [
+        "#pallikannu"
+    ]
 }
