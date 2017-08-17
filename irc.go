@@ -4,6 +4,7 @@ import (
     "fmt"
     config "github.com/huqa/goircbot/config"
     irc "github.com/fluffle/goirc/client"
+    modules "github.com/huqa/goircbot/modules"
 )
 
 type IrcBot struct {
@@ -11,6 +12,7 @@ type IrcBot struct {
     connection  *irc.Conn
     config      *irc.Config
     channels    []string
+    modules     *modules.BotModules
     removers map[string]irc.Remover
 }
 
@@ -34,6 +36,12 @@ func CreateBot(c config.BotConfig) (*IrcBot, error) {
         // HandleFunc returns a handler remover in case we need to remove them
         bot.removers[event] = bot.connection.HandleFunc(event, handler(bot))
     }
+
+    // TODO configfy prefix
+    bot.modules = modules.NewBotModules("!")
+    bot.modules.InitModules()
+
+    // TODO add runnable modules
     // Connect to server
     if err := bot.connection.Connect(); err != nil {
         return nil, err
@@ -70,6 +78,7 @@ func (c *IrcBot) privmsg() irc.HandlerFunc {
     return func(conn *irc.Conn, line *irc.Line) {
         // TODO do commands
         fmt.Println(line)
+        c.modules.RunModule(conn, line)
     }
 } 
 
