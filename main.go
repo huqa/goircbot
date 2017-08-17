@@ -2,6 +2,8 @@ package main
 
 import (
     "fmt"
+    "os"
+    "os/signal"
     config "github.com/huqa/goircbot/config"
 )
 
@@ -16,7 +18,10 @@ func main() {
 
     // create bot
     bot, err := CreateBot(c)
+    sig := make(chan os.Signal, 1)
+    signal.Notify(sig, os.Interrupt)
 
+    <-sig
     //quit := make(chan bool)
     //conn.HandleFunc(irc.DISCONNECTED,
     //    func(conn *irc.Conn, line *irc.Line) { quit <- true })

@@ -1,6 +1,7 @@
 package main
 
 import (
+    "fmt"
     config "github.com/huqa/goircbot/config"
     irc "github.com/fluffle/goirc/client"
 )
@@ -9,18 +10,22 @@ type IrcBot struct {
     owner       string
     connection  *irc.Conn
     config      *irc.Config
+    channels    []string
     removers map[string]irc.Remover
 }
 
 var handlers = map[string]func(*IrcBot) irc.HandlerFunc{
+    irc.PRIVMSG:        (*IrcBot).privmsg,
     irc.CONNECTED:      (*IrcBot).connected,
     irc.DISCONNECTED:   (*IrcBot).disconnected,
 }
 
+// Creates a new IRC bot with a configuration parameter
 func CreateBot(c config.BotConfig) (*IrcBot, error) {
     cfg := createIRCConfiguration(c)
     bot := &IrcBot{
         config:     cfg,
+        channels:   c.Channels,
     }
     bot.connection = irc.Client(cfg)
     bot.removers = make(map[string]irc.Remover)
@@ -48,7 +53,9 @@ func createIRCConfiguration(c config.BotConfig) *irc.Config {
 // Do something on server connect
 func (c *IrcBot) connected() irc.HandlerFunc {
     return func(conn *irc.Conn, line *irc.Line) {
-        // TODO: Join channels
+        for _,channel := range c.channels {
+            c.connection.Join(channel)
+        }
     }
 }
 
@@ -58,4 +65,11 @@ func (c *IrcBot) disconnected() irc.HandlerFunc {
         conn.Connect()
     }
 }
+
+func (c *IrcBot) privmsg() irc.HandlerFunc {
+    return func(conn *irc.Conn, line *irc.Line) {
+        // TODO do commands
+        fmt.Println(line)
+    }
+} 
 
