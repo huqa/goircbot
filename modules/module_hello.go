@@ -4,7 +4,7 @@ import (
     irc "github.com/fluffle/goirc/client"
 )
 
-const callCommand = "Hello"
+const callCommand = "hello"
 
 type HelloModule struct {
     command string
@@ -13,7 +13,7 @@ type HelloModule struct {
 func (m *HelloModule) Init() {}
 
 func (m *HelloModule) Run(conn *irc.Conn, line *irc.Line) {
-    // TODO Call Hello
+    conn.Privmsg(line.Target(), "Moronääs :DD")
 }
 
 func (m *HelloModule) Command() string {
