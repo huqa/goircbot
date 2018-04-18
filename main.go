@@ -4,15 +4,17 @@ import (
     "fmt"
     "os"
     "os/signal"
+    "flag"
     config "github.com/huqa/goircbot/config"
 )
 
 func main() {
 
     fmt.Println("Hello there!")
-    //fmt.Printf("List of channels: %v\n", config.IrcChannels)
+    configPathPtr := flag.String("config", "./bot_config.json", "config file path")
+    flag.Parse()
 
-    c := config.LoadConfig("./bot_config.json")
+    c := config.LoadConfig(*configPathPtr)
 
     fmt.Printf("List of channels: %v\n", c.Channels)
 

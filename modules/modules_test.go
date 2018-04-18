@@ -48,7 +48,7 @@ func TestAddRunnableModule(t *testing.T) {
 func TestInitModules(t *testing.T) {
     b := NewBotModules("!")
     m := &MyTestModule{command: "Testing"}
-    b.AddRunnableModule(m)
+    //b.AddRunnableModule(m)
     b.InitModules()
 }
 

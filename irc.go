@@ -13,7 +13,7 @@ type IrcBot struct {
     config      *irc.Config
     channels    []string
     modules     *modules.BotModules
-    removers map[string]irc.Remover
+    removers    map[string]irc.Remover
 }
 
 var handlers = map[string]func(*IrcBot) irc.HandlerFunc{
